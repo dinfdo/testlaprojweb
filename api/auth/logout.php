@@ -1,4 +1,8 @@
 <?php
-header('Content-Type: application/json');
-$response = ['success' => false, 'message' => 'Logout endpoint'];
-echo json_encode($response);
+require_once __DIR__ . '/../helpers.php';
+
+only_method('POST');
+start_session();
+session_destroy();
+
+json_response(['success' => true]);

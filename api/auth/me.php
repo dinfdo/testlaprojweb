@@ -1,4 +1,16 @@
 <?php
-header('Content-Type: application/json');
-$response = ['success' => false, 'message' => 'Me endpoint'];
-echo json_encode($response);
+require_once __DIR__ . '/../helpers.php';
+
+only_method('GET');
+$session = require_auth();
+
+$pdo  = get_db();
+$stmt = $pdo->prepare('SELECT id, username, email, role, created_at FROM users WHERE id = $1');
+$stmt->execute([$session['id']]);
+$user = $stmt->fetch();
+
+if (!$user) {
+    json_response(['success' => false, 'message' => 'User not found'], 404);
+}
+
+json_response(['success' => true, 'user' => $user]);
