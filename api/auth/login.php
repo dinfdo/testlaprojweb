@@ -6,15 +6,15 @@ start_session();
 
 $body       = request_body();
 $identifier = trim($body['identifier'] ?? $body['username'] ?? $body['email'] ?? '');
-$password   = $body['password']      ?? '';
+$password   = $body['password'] ?? '';
 
 if (!$identifier || !$password) {
     json_response(['success' => false, 'message' => 'Username/email and password are required']);
 }
 
 $pdo  = get_db();
-$stmt = $pdo->prepare('SELECT id, username, password_hash, role FROM users WHERE username = $1 OR email = $1');
-$stmt->execute([$identifier]);
+$stmt = $pdo->prepare('SELECT id, username, password_hash, role FROM users WHERE username = ? OR email = ?');
+$stmt->execute([$identifier, $identifier]);
 $user = $stmt->fetch();
 
 if (!$user || !password_verify($password, $user['password_hash'])) {

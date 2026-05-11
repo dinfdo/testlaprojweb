@@ -8,12 +8,12 @@ $params = [];
 $where  = [];
 
 if (isset($_GET['device_id']) && ctype_digit($_GET['device_id'])) {
-    $where[]  = 'l.device_id = $1';
+    $where[]  = 'l.device_id = ?';
     $params[] = (int)$_GET['device_id'];
 }
 
 $sql = '
-    SELECT l.id, l.level_number, l.title, l.description, l.min_score_required,
+    SELECT l.id, l.level_number, l.title, l.description, l.game_type, l.min_score_required,
            d.id AS device_id, d.name AS device_name
     FROM levels l
     JOIN devices d ON d.id = l.device_id

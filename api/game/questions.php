@@ -10,30 +10,25 @@ if (empty($_GET['level_id']) || !ctype_digit($_GET['level_id'])) {
 $levelId = (int)$_GET['level_id'];
 $pdo     = get_db();
 
-// Verify level exists
-$stmt = $pdo->prepare('SELECT id, title, description, min_score_required FROM levels WHERE id = $1');
+$stmt = $pdo->prepare('SELECT id, title, description, game_type, min_score_required FROM levels WHERE id = ?');
 $stmt->execute([$levelId]);
 $level = $stmt->fetch();
 if (!$level) {
     json_response(['success' => false, 'message' => 'Level not found'], 404);
 }
 
-// Fetch questions
 $stmt = $pdo->prepare('
-    SELECT id, question_text, question_type, difficulty
-    FROM questions
-    WHERE level_id = $1
-    ORDER BY id
+    SELECT q.id, q.question_text, q.question_type, q.difficulty,
+           c.slot_position
+    FROM questions q
+    LEFT JOIN components c ON c.id = q.component_id
+    WHERE q.level_id = ?
+    ORDER BY q.id
 ');
 $stmt->execute([$levelId]);
 $questions = $stmt->fetchAll();
 
-// Attach shuffled answers (without is_correct)
-$answerStmt = $pdo->prepare('
-    SELECT id, answer_text
-    FROM answers
-    WHERE question_id = $1
-');
+$answerStmt = $pdo->prepare('SELECT id, answer_text FROM answers WHERE question_id = ?');
 foreach ($questions as &$q) {
     $answerStmt->execute([(int)$q['id']]);
     $answers = $answerStmt->fetchAll();

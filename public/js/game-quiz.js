@@ -1,3 +1,9 @@
+function esc(str) {
+  const d = document.createElement('div');
+  d.textContent = String(str);
+  return d.innerHTML;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const levelSelect = document.getElementById('levelSelect');
   const container = document.getElementById('questionContainer');
@@ -19,12 +25,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       ? questions.map((question, index) => `
         <article class="quiz-card">
           <span class="difficulty-pill">Intrebarea ${index + 1}</span>
-          <h2>${question.question_text}</h2>
+          <h2>${esc(question.question_text)}</h2>
           <div class="answer-list">
             ${(question.answers || []).map(answer => `
               <label class="answer-option">
-                <input type="radio" name="question_${question.id}" value="${answer.id}" data-question-id="${question.id}">
-                ${answer.answer_text}
+                <input type="radio" name="question_${esc(question.id)}" value="${esc(answer.id)}" data-question-id="${esc(question.id)}">
+                ${esc(answer.answer_text)}
               </label>
             `).join('')}
           </div>

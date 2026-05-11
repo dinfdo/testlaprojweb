@@ -9,11 +9,11 @@ if (empty($_GET['id']) || !ctype_digit($_GET['id'])) {
 
 $pdo  = get_db();
 $stmt = $pdo->prepare('
-    SELECT c.id, c.name, c.description, c.purpose, c.difficulty_level, c.image_path,
+    SELECT c.id, c.name, c.description, c.purpose, c.difficulty_level, c.image_path, c.slot_position,
            d.id AS device_id, d.name AS device_name
     FROM components c
     JOIN devices d ON d.id = c.device_id
-    WHERE c.id = $1
+    WHERE c.id = ?
 ');
 $stmt->execute([(int)$_GET['id']]);
 $component = $stmt->fetch();

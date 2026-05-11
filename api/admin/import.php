@@ -4,11 +4,6 @@ require_once __DIR__ . '/../helpers.php';
 only_method('POST');
 require_admin();
 
-// Expects multipart/form-data with:
-//   type = 'components'
-//   format = 'csv' | 'json'
-//   file = uploaded file
-
 $type   = $_POST['type']   ?? '';
 $format = $_POST['format'] ?? '';
 
@@ -50,7 +45,6 @@ $pdo      = get_db();
 $inserted = 0;
 $skipped  = 0;
 
-// Resolve device names to IDs
 $deviceCache = [];
 $deviceStmt  = $pdo->query('SELECT id, name FROM devices');
 foreach ($deviceStmt->fetchAll() as $d) {
@@ -58,17 +52,16 @@ foreach ($deviceStmt->fetchAll() as $d) {
 }
 
 $insertStmt = $pdo->prepare('
-    INSERT INTO components (device_id, name, description, purpose, difficulty_level)
-    VALUES ($1, $2, $3, $4, $5)
-    ON CONFLICT DO NOTHING
+    INSERT IGNORE INTO components (device_id, name, description, purpose, difficulty_level)
+    VALUES (?, ?, ?, ?, ?)
 ');
 
 foreach ($rows as $row) {
     $deviceKey = strtolower(trim($row['device'] ?? ''));
     $deviceId  = $deviceCache[$deviceKey] ?? null;
-    $name      = trim($row['name']             ?? '');
-    $desc      = trim($row['description']      ?? '');
-    $purpose   = trim($row['purpose']          ?? '');
+    $name      = trim($row['name']              ?? '');
+    $desc      = trim($row['description']       ?? '');
+    $purpose   = trim($row['purpose']           ?? '');
     $diff      = isset($row['difficulty_level']) ? (int)$row['difficulty_level'] : 1;
 
     if (!$deviceId || !$name || !$desc || !$purpose || $diff < 1 || $diff > 3) {

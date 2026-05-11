@@ -7,8 +7,7 @@ require_admin();
 $type   = $_GET['type']   ?? 'components';   // components | users | leaderboard
 $format = $_GET['format'] ?? 'json';          // json | csv
 
-$allowed_types = ['components', 'users', 'leaderboard'];
-if (!in_array($type, $allowed_types, true)) {
+if (!in_array($type, ['components', 'users', 'leaderboard'], true)) {
     json_response(['success' => false, 'message' => 'Invalid type'], 400);
 }
 
@@ -16,7 +15,7 @@ $pdo = get_db();
 
 if ($type === 'components') {
     $stmt = $pdo->query('
-        SELECT c.id, d.name AS device, c.name, c.description, c.purpose, c.difficulty_level
+        SELECT c.id, d.name AS device, c.name, c.description, c.purpose, c.difficulty_level, c.slot_position
         FROM components c JOIN devices d ON d.id = c.device_id
         ORDER BY d.name, c.difficulty_level, c.name
     ');
@@ -25,8 +24,8 @@ if ($type === 'components') {
 } else {
     $stmt = $pdo->query('
         SELECT u.username,
-               COALESCE(SUM(up.best_score), 0)                              AS total_score,
-               COUNT(up.level_id) FILTER (WHERE up.completed = TRUE)        AS levels_completed
+               COALESCE(SUM(up.best_score), 0)                           AS total_score,
+               SUM(CASE WHEN up.completed = 1 THEN 1 ELSE 0 END)         AS levels_completed
         FROM users u
         LEFT JOIN user_progress up ON up.user_id = u.id
         WHERE u.role = \'user\'
@@ -52,7 +51,6 @@ if ($format === 'csv') {
     exit;
 }
 
-// Default: JSON
 header('Content-Type: application/json; charset=utf-8');
 header('Content-Disposition: attachment; filename="' . $type . '.json"');
 echo json_encode($rows, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);

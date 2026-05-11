@@ -1,12 +1,12 @@
 <?php
 function get_db(): PDO {
-    $host   = getenv('DB_HOST')   ?: '127.0.0.1';
-    $port   = getenv('DB_PORT')   ?: '5432';
-    $dbname = getenv('DB_NAME')   ?: 'LeG_DB';
-    $user   = getenv('DB_USER')   ?: 'postgres';
-    $pass   = getenv('DB_PASS')   ?: 'STUDENT';
+    $host   = getenv('DB_HOST') ?: '127.0.0.1';
+    $port   = getenv('DB_PORT') ?: '3306';
+    $dbname = getenv('DB_NAME') ?: 'leg_db';
+    $user   = getenv('DB_USER') ?: 'root';
+    $pass   = getenv('DB_PASS') ?: '';
 
-    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
+    $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
 
     return new PDO($dsn, $user, $pass, [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

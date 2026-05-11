@@ -5,7 +5,7 @@ only_method('GET');
 $session = require_auth();
 
 $pdo  = get_db();
-$stmt = $pdo->prepare('SELECT id, username, email, role, created_at FROM users WHERE id = $1');
+$stmt = $pdo->prepare('SELECT id, username, email, role, created_at FROM users WHERE id = ?');
 $stmt->execute([$session['id']]);
 $user = $stmt->fetch();
 
