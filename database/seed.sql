@@ -1,5 +1,3 @@
--- Seed data for LeG – MySQL / MariaDB
-
 INSERT INTO devices (name, description) VALUES
 ('Computer', 'A computer is an electronic device made of several hardware components that work together to process, store and display information.');
 
