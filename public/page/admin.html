@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - LeG</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html">LeG</a>
+    <nav class="nav-links" aria-label="Navigatie principala">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="components.html">Componente</a>
+      <a href="game.html">Joc</a>
+      <a href="leaderboard.html">Clasament</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-heading">
+      <p class="eyebrow">Administrare continut</p>
+      <h1>Panou Admin</h1>
+      <p class="muted">Privire rapida asupra utilizatorilor, componentelor si sesiunilor de joc.</p>
+    </section>
+
+    <section class="stats-row" aria-label="Statistici admin">
+      <article class="stat-card">
+        <span class="stat-value" id="totalUsers">0</span>
+        <span class="stat-label">utilizatori</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-value" id="totalComponents">0</span>
+        <span class="stat-label">componente</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-value" id="totalSessions">0</span>
+        <span class="stat-label">sesiuni quiz</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-value" id="avgScore">0%</span>
+        <span class="stat-label">scor mediu</span>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <div class="panel">
+        <div class="section-title">
+          <h2>Componente</h2>
+        </div>
+        <div id="adminComponents" class="list-stack"></div>
+      </div>
+      <div class="panel">
+        <div class="section-title">
+          <h2>Utilizatori</h2>
+        </div>
+        <div id="adminUsers" class="list-stack"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

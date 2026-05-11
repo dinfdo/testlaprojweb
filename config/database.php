@@ -2,9 +2,9 @@
 function get_db(): PDO {
     $host   = getenv('DB_HOST')   ?: '127.0.0.1';
     $port   = getenv('DB_PORT')   ?: '5432';
-    $dbname = getenv('DB_NAME')   ?: 'leg_project';
+    $dbname = getenv('DB_NAME')   ?: 'LeG_DB';
     $user   = getenv('DB_USER')   ?: 'postgres';
-    $pass   = getenv('DB_PASS')   ?: '';
+    $pass   = getenv('DB_PASS')   ?: 'STUDENT';
 
     $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
 

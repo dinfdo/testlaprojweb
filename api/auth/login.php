@@ -4,17 +4,17 @@ require_once __DIR__ . '/../helpers.php';
 only_method('POST');
 start_session();
 
-$body     = request_body();
-$username = trim($body['username'] ?? '');
-$password = $body['password']      ?? '';
+$body       = request_body();
+$identifier = trim($body['identifier'] ?? $body['username'] ?? $body['email'] ?? '');
+$password   = $body['password']      ?? '';
 
-if (!$username || !$password) {
-    json_response(['success' => false, 'message' => 'Username and password are required']);
+if (!$identifier || !$password) {
+    json_response(['success' => false, 'message' => 'Username/email and password are required']);
 }
 
 $pdo  = get_db();
-$stmt = $pdo->prepare('SELECT id, username, password_hash, role FROM users WHERE username = $1');
-$stmt->execute([$username]);
+$stmt = $pdo->prepare('SELECT id, username, password_hash, role FROM users WHERE username = $1 OR email = $1');
+$stmt->execute([$identifier]);
 $user = $stmt->fetch();
 
 if (!$user || !password_verify($password, $user['password_hash'])) {

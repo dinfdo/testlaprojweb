@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joc - LeG</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="../index.html">LeG</a>
+    <nav class="nav-links" aria-label="Navigatie principala">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="components.html">Componente</a>
+      <a href="leaderboard.html">Clasament</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-heading split-heading">
+      <div>
+        <p class="eyebrow">Mini-joc quiz</p>
+        <h1>Testeaza ce ai invatat</h1>
+        <p class="muted">Alege un nivel, raspunde la provocari si trimite scorul pentru progres.</p>
+      </div>
+      <label class="select-control" for="levelSelect">
+        Nivel
+        <select id="levelSelect"></select>
+      </label>
+    </section>
+
+    <section class="quiz-shell">
+      <div id="questionContainer" class="quiz-list" aria-live="polite"></div>
+      <div class="quiz-actions">
+        <button id="submitQuiz" class="button primary" type="button">Trimite raspunsurile</button>
+        <p id="quizResult" class="form-message" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/game.js"></script>
+</body>
+</html>

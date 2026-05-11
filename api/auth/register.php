@@ -5,7 +5,7 @@ only_method('POST');
 start_session();
 
 $body     = request_body();
-$username = trim($body['username'] ?? '');
+$username = trim($body['name'] ?? '');
 $email    = trim($body['email']    ?? '');
 $password = $body['password']      ?? '';
 
