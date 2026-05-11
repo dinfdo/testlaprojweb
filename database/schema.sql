@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
     role          VARCHAR(20)  NOT NULL DEFAULT 'user',
     created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- role: 'user' | 'admin'
+
 
 CREATE TABLE IF NOT EXISTS devices (
     id          INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,8 +25,6 @@ CREATE TABLE IF NOT EXISTS components (
     slot_position    VARCHAR(50)  DEFAULT NULL,
     FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- difficulty_level: 1=basic, 2=intermediate, 3=advanced
--- slot_position: drag-and-drop target id, e.g. 'cpu-socket', 'ram-slot'
 
 CREATE TABLE IF NOT EXISTS levels (
     id                 INT AUTO_INCREMENT PRIMARY KEY,
@@ -39,7 +37,6 @@ CREATE TABLE IF NOT EXISTS levels (
     UNIQUE KEY uq_device_level (device_id, level_number),
     FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- game_type: 'learn'=info page, 'drag_drop'=place on diagram, 'matching'=think&match, 'quiz'=final test
 
 CREATE TABLE IF NOT EXISTS questions (
     id            INT AUTO_INCREMENT PRIMARY KEY,
@@ -51,7 +48,6 @@ CREATE TABLE IF NOT EXISTS questions (
     FOREIGN KEY (level_id)     REFERENCES levels(id)     ON DELETE CASCADE,
     FOREIGN KEY (component_id) REFERENCES components(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- question_type: 'single_choice' | 'true_false' | 'matching' | 'drag_drop' | 'scenario'
 
 CREATE TABLE IF NOT EXISTS answers (
     id          INT AUTO_INCREMENT PRIMARY KEY,
