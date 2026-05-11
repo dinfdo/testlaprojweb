@@ -8,16 +8,16 @@ $params = [];
 $where  = [];
 
 if (isset($_GET['device_id']) && ctype_digit($_GET['device_id'])) {
-    $where[]  = 'c.device_id = $' . (count($params) + 1);
+    $where[]  = 'c.device_id = ?';
     $params[] = (int)$_GET['device_id'];
 }
 if (isset($_GET['difficulty']) && ctype_digit($_GET['difficulty'])) {
-    $where[]  = 'c.difficulty_level = $' . (count($params) + 1);
+    $where[]  = 'c.difficulty_level = ?';
     $params[] = (int)$_GET['difficulty'];
 }
 
 $sql = '
-    SELECT c.id, c.name, c.description, c.purpose, c.difficulty_level, c.image_path,
+    SELECT c.id, c.name, c.description, c.purpose, c.difficulty_level, c.image_path, c.slot_position,
            d.id AS device_id, d.name AS device_name
     FROM components c
     JOIN devices d ON d.id = c.device_id

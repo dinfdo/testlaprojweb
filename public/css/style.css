@@ -245,6 +245,20 @@ button.primary:hover {
   background: #ecf3ff;
 }
 
+.psu {
+  right: 10%;
+  bottom: 10%;
+  background: #f3ffe0;
+}
+
+.chip {
+  transition: box-shadow 0.2s;
+}
+.chip:hover {
+  box-shadow: 0 18px 36px rgba(48, 88, 112, 0.2);
+  z-index: 2;
+}
+
 .feature-grid,
 .component-grid,
 .stats-row,
@@ -254,7 +268,7 @@ button.primary:hover {
 }
 
 .feature-grid {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .component-grid {
@@ -544,11 +558,121 @@ th {
     grid-template-columns: 1fr;
   }
 
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .device-panel {
     min-height: 330px;
   }
 
   .nav-links {
     justify-content: flex-start;
+  }
+}
+
+/* ── Animations ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-12px) rotate(1.5deg); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.hero-copy {
+  animation: fadeInUp 0.65s ease-out both;
+}
+
+.device-panel {
+  animation: fadeInRight 0.65s ease-out 0.15s both;
+}
+
+.cpu   { animation: float 3.2s ease-in-out infinite; }
+.ram   { animation: float 2.9s ease-in-out 0.5s infinite; }
+.gpu   { animation: float 3.5s ease-in-out 1.1s infinite; }
+.ssd   { animation: float 3.0s ease-in-out 0.3s infinite; }
+.board { animation: float 3.7s ease-in-out 0.8s infinite; }
+.psu   { animation: float 2.7s ease-in-out 1.4s infinite; }
+
+.feature-card {
+  animation: fadeInUp 0.5s ease-out both;
+}
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+.button.primary {
+  transition: background 0.18s, box-shadow 0.18s, transform 0.14s;
+}
+.button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(38, 166, 154, 0.34);
+}
+
+/* ── Landing (index.html) ── */
+main.landing-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  min-height: 100vh;
+  padding: 56px 0;
+}
+
+.brand-large {
+  display: inline-grid;
+  place-items: center;
+  min-width: 72px;
+  height: 56px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.landing-tagline {
+  margin: 0 0 20px;
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.landing-features {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 2.1;
+  font-size: 1rem;
+}
+
+.landing-auth {
+  width: 100%;
+  max-width: 480px;
+  justify-self: end;
+}
+
+@media (max-width: 780px) {
+  main.landing-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    min-height: unset;
+    padding: 40px 0 56px;
+  }
+
+  .landing-auth {
+    justify-self: stretch;
+    max-width: 100%;
   }
 }

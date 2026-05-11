@@ -1,81 +1,99 @@
+-- LeG schema – MySQL / MariaDB
+-- Run once: CREATE DATABASE leg_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS users (
-    id            SERIAL PRIMARY KEY,
+    id            INT AUTO_INCREMENT PRIMARY KEY,
     username      VARCHAR(100) NOT NULL UNIQUE,
     email         VARCHAR(255) NOT NULL UNIQUE,
     password_hash TEXT         NOT NULL,
     role          VARCHAR(20)  NOT NULL DEFAULT 'user',
     created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 -- role: 'user' | 'admin'
 
 CREATE TABLE IF NOT EXISTS devices (
-    id          SERIAL PRIMARY KEY,
+    id          INT AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(100) NOT NULL UNIQUE,
     description TEXT
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS components (
-    id               SERIAL PRIMARY KEY,
-    device_id        INTEGER      NOT NULL REFERENCES devices(id) ON DELETE CASCADE,
+    id               INT AUTO_INCREMENT PRIMARY KEY,
+    device_id        INT          NOT NULL,
     name             VARCHAR(100) NOT NULL,
     description      TEXT         NOT NULL,
     purpose          TEXT         NOT NULL,
-    difficulty_level INTEGER      NOT NULL DEFAULT 1,
-    image_path       TEXT
-);
+    difficulty_level INT          NOT NULL DEFAULT 1,
+    image_path       TEXT,
+    slot_position    VARCHAR(50)  DEFAULT NULL,
+    FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 -- difficulty_level: 1=basic, 2=intermediate, 3=advanced
+-- slot_position: drag-and-drop target id, e.g. 'cpu-socket', 'ram-slot'
 
 CREATE TABLE IF NOT EXISTS levels (
-    id                 SERIAL PRIMARY KEY,
-    device_id          INTEGER      NOT NULL REFERENCES devices(id) ON DELETE CASCADE,
-    level_number       INTEGER      NOT NULL,
+    id                 INT AUTO_INCREMENT PRIMARY KEY,
+    device_id          INT          NOT NULL,
+    level_number       INT          NOT NULL,
     title              VARCHAR(150) NOT NULL,
     description        TEXT,
-    min_score_required INTEGER      NOT NULL DEFAULT 70,
-    UNIQUE (device_id, level_number)
-);
+    game_type          ENUM('learn','drag_drop','matching','quiz') NOT NULL DEFAULT 'quiz',
+    min_score_required INT          NOT NULL DEFAULT 70,
+    UNIQUE KEY uq_device_level (device_id, level_number),
+    FOREIGN KEY (device_id) REFERENCES devices(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- game_type: 'learn'=info page, 'drag_drop'=place on diagram, 'matching'=think&match, 'quiz'=final test
 
 CREATE TABLE IF NOT EXISTS questions (
-    id            SERIAL PRIMARY KEY,
-    level_id      INTEGER     NOT NULL REFERENCES levels(id)     ON DELETE CASCADE,
-    component_id  INTEGER              REFERENCES components(id) ON DELETE SET NULL,
+    id            INT AUTO_INCREMENT PRIMARY KEY,
+    level_id      INT         NOT NULL,
+    component_id  INT         DEFAULT NULL,
     question_text TEXT        NOT NULL,
     question_type VARCHAR(30) NOT NULL DEFAULT 'single_choice',
-    difficulty    INTEGER     NOT NULL DEFAULT 1
-);
--- question_type: 'single_choice' | 'true_false' | 'matching' | 'scenario'
+    difficulty    INT         NOT NULL DEFAULT 1,
+    FOREIGN KEY (level_id)     REFERENCES levels(id)     ON DELETE CASCADE,
+    FOREIGN KEY (component_id) REFERENCES components(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- question_type: 'single_choice' | 'true_false' | 'matching' | 'drag_drop' | 'scenario'
 
 CREATE TABLE IF NOT EXISTS answers (
-    id          SERIAL PRIMARY KEY,
-    question_id INTEGER NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    question_id INT     NOT NULL,
     answer_text TEXT    NOT NULL,
-    is_correct  BOOLEAN NOT NULL DEFAULT FALSE
-);
+    is_correct  TINYINT(1) NOT NULL DEFAULT 0,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS quiz_sessions (
-    id               SERIAL PRIMARY KEY,
-    user_id          INTEGER   NOT NULL REFERENCES users(id)  ON DELETE CASCADE,
-    level_id         INTEGER   NOT NULL REFERENCES levels(id) ON DELETE CASCADE,
-    score            INTEGER   NOT NULL,
-    total_questions  INTEGER   NOT NULL,
-    correct_answers  INTEGER   NOT NULL,
-    created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+    id               INT AUTO_INCREMENT PRIMARY KEY,
+    user_id          INT       NOT NULL,
+    level_id         INT       NOT NULL,
+    score            INT       NOT NULL,
+    total_questions  INT       NOT NULL,
+    correct_answers  INT       NOT NULL,
+    created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id)  REFERENCES users(id)  ON DELETE CASCADE,
+    FOREIGN KEY (level_id) REFERENCES levels(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS user_progress (
-    id         SERIAL PRIMARY KEY,
-    user_id    INTEGER   NOT NULL REFERENCES users(id)  ON DELETE CASCADE,
-    level_id   INTEGER   NOT NULL REFERENCES levels(id) ON DELETE CASCADE,
-    best_score INTEGER   NOT NULL DEFAULT 0,
-    completed  BOOLEAN   NOT NULL DEFAULT FALSE,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (user_id, level_id)
-);
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    user_id    INT        NOT NULL,
+    level_id   INT        NOT NULL,
+    best_score INT        NOT NULL DEFAULT 0,
+    completed  TINYINT(1) NOT NULL DEFAULT 0,
+    updated_at TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_user_level (user_id, level_id),
+    FOREIGN KEY (user_id)  REFERENCES users(id)  ON DELETE CASCADE,
+    FOREIGN KEY (level_id) REFERENCES levels(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS learned_components (
-    id           SERIAL PRIMARY KEY,
-    user_id      INTEGER   NOT NULL REFERENCES users(id)      ON DELETE CASCADE,
-    component_id INTEGER   NOT NULL REFERENCES components(id) ON DELETE CASCADE,
+    id           INT AUTO_INCREMENT PRIMARY KEY,
+    user_id      INT       NOT NULL,
+    component_id INT       NOT NULL,
     learned_at   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (user_id, component_id)
-);
+    UNIQUE KEY uq_user_component (user_id, component_id),
+    FOREIGN KEY (user_id)      REFERENCES users(id)      ON DELETE CASCADE,
+    FOREIGN KEY (component_id) REFERENCES components(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

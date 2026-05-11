@@ -8,14 +8,7 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="index.html">LeG</a>
-    <nav class="nav-links" aria-label="Navigatie principala">
-      <a href="page/components.html">Componente</a>
-      <a href="page/game.html">Joc</a>
-      <a href="page/leaderboard.html">Clasament</a>
-      <a href="page/login.html">Login</a>
-      <a class="nav-button" href="page/register.html">Cont nou</a>
-    </nav>
+    <a class="brand" href="#">LeG</a>
   </header>
 
   <main>
@@ -28,36 +21,46 @@
           raspunzi la intrebari si iti urmaresti progresul pana ajungi in clasament.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="page/game.html">Incepe jocul</a>
-          <a class="button ghost" href="page/components.html">Vezi componentele</a>
+          <a class="button primary" href="pages/auth/register.html">Incepe gratuit</a>
+          <a class="button ghost" href="pages/app/learn.html">Exploreaza componentele</a>
         </div>
       </div>
+
       <div class="device-panel" aria-label="Schema simplificata computer">
         <div class="chip cpu">CPU</div>
         <div class="chip ram">RAM</div>
         <div class="chip gpu">GPU</div>
         <div class="chip ssd">SSD</div>
         <div class="chip board">Motherboard</div>
+        <div class="chip psu">PSU</div>
       </div>
     </section>
 
     <section class="feature-grid" aria-label="Functii LeG">
       <article class="feature-card">
         <span class="badge">01</span>
-        <h2>Niveluri de dificultate</h2>
-        <p>De la componente de baza pana la scenarii de depanare, fiecare nivel are un scor minim.</p>
+        <h2>Invata progresiv</h2>
+        <p>Parcurge componentele una cate una, de la CPU pana la Cooling System, cu informatii clare si vizuale.</p>
       </article>
       <article class="feature-card">
         <span class="badge">02</span>
-        <h2>Progres monitorizat</h2>
-        <p>Aplicatia memoreaza scorurile, componentele invatate si incercarile recente.</p>
+        <h2>Joaca si testeaza</h2>
+        <p>Plaseaza piesele pe diagrama, potriveste descrierile si rezolva quiz-ul final pentru a trece nivelul.</p>
       </article>
       <article class="feature-card">
         <span class="badge">03</span>
-        <h2>Clasament si RSS</h2>
-        <p>Rezultatele celor mai buni utilizatori sunt afisate in pagina si disponibile ca flux RSS.</p>
+        <h2>Urmareste-ti progresul</h2>
+        <p>Scorurile, componentele invatate si incercarile recente sunt salvate in dashboard-ul personal.</p>
+      </article>
+      <article class="feature-card">
+        <span class="badge">04</span>
+        <h2>Clasament live</h2>
+        <p>Compara-te cu alti utilizatori in clasamentul global, disponibil si ca flux RSS in timp real.</p>
       </article>
     </section>
   </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/nav.js"></script>
 </body>
 </html>
