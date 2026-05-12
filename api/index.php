@@ -17,7 +17,7 @@ json_response([
         'GET  api/rss/leaderboard.php'      => 'Leaderboard RSS feed',
         'POST api/auth/login.php'           => 'Login',
         'POST api/auth/register.php'        => 'Register',
-        'GET  api/auth/me.php'              => 'Current user (auth)',
+        'GET  api/auth/whoami.php'          => 'Current user (auth)',
         'POST api/auth/logout.php'          => 'Logout',
         'GET  api/admin/stats.php'          => 'Admin stats (admin)',
         'ANY  api/admin/components.php'     => 'Admin CRUD components (admin)',
