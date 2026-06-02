@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LeG - Desktop</title>
+  <link rel="icon" href="assets/icons/this_computer.png">
+  <link rel="stylesheet" href="css/win95.css">
+  <link rel="stylesheet" href="css/games.css">
+</head>
+<body>
+  <div id="boot" class="boot" data-testid="boot-screen">
+    <pre id="boot-text"></pre>
+  </div>
+
+  <main id="desktop" data-testid="desktop" style="display:none">
+    <img id="desktop-wallpaper" src="assets/wallpaper.png" alt="">
+
+    <div class="icon-grid" id="desktop-icons" data-testid="desktop-icons"></div>
+
+    <div id="windows-root"></div>
+
+    <div id="desktop-guide" data-testid="desktop-guide">
+      <div class="dg-title"><img src="assets/icons/this_computer.png" alt=""> Ghid LeG 95</div>
+      <div class="dg-body">
+        <div class="dg-item" data-testid="guide-video">
+          <img src="assets/icons/movies.png" alt="">
+          <span><b>0. Intro Video</b><br>Vizioneza videoclipul introductiv al aplicatiei</span>
+        </div>
+        <div class="dg-item" data-testid="guide-encyclopedia">
+          <img src="assets/icons/search.png" alt="">
+          <span><b>1. Enciclopedie</b><br>Invata componentele hardware inainte de orice</span>
+        </div>
+        <div class="dg-item" data-testid="guide-games">
+          <img src="assets/icons/tools.png" alt="">
+          <span><b>2. Jocuri</b><br>6 mini-jocuri: asamblare, identificare, cabluri si altele</span>
+        </div>
+        <div class="dg-item" data-testid="guide-progress">
+          <img src="assets/icons/spreadsheet_program.png" alt="">
+          <span><b>3. Progresul meu</b><br>Urmareste scorurile si evolutia ta</span>
+        </div>
+        <div class="dg-item" data-testid="guide-leaderboard">
+          <img src="assets/icons/news.png" alt="">
+          <span><b>4. Leaderboard</b><br>Compara-te cu ceilalti jucatori</span>
+        </div>
+        <div class="dg-item" data-testid="guide-profile">
+          <img src="assets/icons/password_manager.png" alt="">
+          <span><b>5. Profil</b><br>Personalizeaza-ti avatarul</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="startmenu" id="startmenu" data-testid="start-menu">
+      <div class="side">LeG&nbsp;95</div>
+      <ul>
+        <li data-app="video" data-testid="start-video"><img src="assets/icons/movies.png" alt=""> Intro Video</li>
+        <li data-app="games" data-testid="start-games"><img src="assets/icons/tools.png" alt=""> Jocuri</li>
+        <li data-app="encyclopedia" data-testid="start-encyclopedia"><img src="assets/icons/search.png" alt=""> Enciclopedie</li>
+        <li data-app="leaderboard" data-testid="start-leaderboard"><img src="assets/icons/news.png" alt=""> Leaderboard</li>
+        <li data-app="rss" data-testid="start-rss"><img src="assets/icons/webpage_file.png" alt=""> Feed RSS</li>
+        <li data-app="progress" data-testid="start-progress"><img src="assets/icons/spreadsheet_program.png" alt=""> Progresul meu</li>
+        <li data-app="profile" data-testid="start-profile"><img src="assets/icons/password_manager.png" alt=""> Profil</li>
+        <li data-app="admin" id="startmenu-admin" data-testid="start-admin" style="display:none"><img src="assets/icons/this_computer.png" alt=""> Admin</li>
+        <li class="sep-line"></li>
+        <li id="btn-logout" data-testid="start-logout"><img src="assets/icons/logout.png" alt=""> Deconectare</li>
+      </ul>
+    </nav>
+
+    <footer class="taskbar" data-testid="taskbar">
+      <button class="start" id="btn-start" data-testid="start-button">
+        <img src="assets/icons/this_computer.png" alt=""> Start
+      </button>
+      <div class="tasks" id="tasks"></div>
+      <div class="tray">
+        <button class="tray-btn" id="btn-mute" title="Sunet on/off" data-testid="tray-mute">
+          <img id="mute-icon" src="assets/icons/sounds.png" alt="" style="width:16px;height:16px">
+        </button>
+        <span class="me" data-testid="tray-user">
+          <img id="tray-icon" src="assets/profiles/astronaut.jpg" alt="">
+          <span id="tray-name">guest</span>
+        </span>
+        <span id="tray-clock" data-testid="tray-clock"></span>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/sounds.js"></script>
+  <script src="js/dnd.js"></script>
+  <script src="js/wm.js"></script>
+  <script src="js/games/_shared.js"></script>
+  <script src="js/games/index.js"></script>
+  <script src="js/games/assemble.js"></script>
+  <script src="js/games/identify.js"></script>
+  <script src="js/games/match.js"></script>
+  <script src="js/games/cables.js"></script>
+  <script src="js/games/mini-quiz.js"></script>
+  <script src="js/games/timeline.js"></script>
+  <script src="js/apps.js"></script>
+  <script src="js/desktop.js"></script>
+</body>
+</html>

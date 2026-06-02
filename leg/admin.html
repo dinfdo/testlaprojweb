@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LeG - Admin</title>
+  <link rel="icon" href="assets/icons/this_computer.png">
+  <link rel="stylesheet" href="css/win95.css">
+  <link rel="stylesheet" href="css/games.css">
+</head>
+<body style="background:#008080;overflow:auto">
+  <div style="max-width:960px;margin:24px auto;padding:0 12px">
+    <div class="about-card">
+      <header class="card-title">
+        <img src="assets/icons/this_computer.png" alt=""> Panou Administrare LeG
+      </header>
+      <div class="card-body">
+        <div class="row" style="justify-content:space-between">
+          <div data-testid="admin-greeting">
+            Conectat ca: <b id="admin-user">-</b>
+          </div>
+          <div class="row" style="gap:6px">
+            <button class="btn" id="btn-back" data-testid="admin-back">&laquo; Desktop</button>
+            <button class="btn" id="btn-logout" data-testid="admin-logout">Deconectare</button>
+          </div>
+        </div>
+
+        <h3 style="margin:10px 0 4px 0">Statistici</h3>
+        <div class="admin-grid" id="admin-stats" data-testid="admin-stats"></div>
+
+        <h3>Utilizatori</h3>
+        <div style="margin-bottom:8px">
+          <button class="btn" id="export-users" data-testid="admin-export-csv">Export CSV</button>
+          <button class="btn" id="export-scores" data-testid="admin-export-json">Export JSON</button>
+          <a class="btn" href="rss.xml" target="_blank" data-testid="admin-rss">RSS feed</a>
+        </div>
+        <table class="lb-table" id="admin-users" data-testid="admin-users"></table>
+
+        <h3 style="margin-top:14px">Componente</h3>
+        <details>
+          <summary style="cursor:pointer">+ Adauga componenta</summary>
+          <form id="form-comp" class="col" style="background:#fff;padding:10px;border:2px inset #fff;margin-top:6px" data-testid="form-comp">
+            <div class="row">
+              <div style="flex:1"><label>Slug</label><input class="input" name="slug" required pattern="[a-z0-9\-]+"></div>
+              <div style="flex:1"><label>Nume</label><input class="input" name="name" required></div>
+            </div>
+            <div class="row">
+              <div style="flex:1"><label>Categorie</label><input class="input" name="category" value="core"></div>
+              <div style="flex:1"><label>Icon (din /assets/icons)</label><input class="input" name="icon" value="this_computer.png"></div>
+            </div>
+            <label>Descriere scurta</label>
+            <input class="input" name="short_desc" required maxlength="160">
+            <label>Descriere completa</label>
+            <textarea class="input" name="description" rows="3" required></textarea>
+            <button class="btn" type="submit" data-testid="comp-submit">Salveaza</button>
+            <div class="msg-error" id="comp-msg"></div>
+          </form>
+        </details>
+        <details style="margin-top:6px">
+          <summary style="cursor:pointer">&#8593; Importa componente (CSV / JSON)</summary>
+          <form id="form-import" class="col" style="background:#fff;padding:10px;border:2px inset #fff;margin-top:6px" data-testid="form-import">
+            <label>Fisier <b>.csv</b> sau <b>.json</b></label>
+            <input type="file" class="input" name="file" accept=".csv,.json" required data-testid="import-file">
+            <div style="font-size:11px;color:#555;margin:2px 0 6px">
+              CSV: coloane <code>slug,name,category,short_desc,description,icon,specs</code><br>
+              JSON: <code>{"components":[{...}]}</code> sau array direct
+            </div>
+            <button class="btn" type="submit" data-testid="import-submit">Importa</button>
+            <div id="import-msg" style="margin-top:6px"></div>
+          </form>
+        </details>
+        <table class="lb-table" id="admin-components" data-testid="admin-components" style="margin-top:8px"></table>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/sounds.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

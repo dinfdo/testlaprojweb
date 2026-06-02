@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LeG - Learning by Playing</title>
+  <link rel="icon" href="assets/icons/this_computer.png">
+  <link rel="stylesheet" href="css/win95.css">
+</head>
+<body class="landing-body">
+
+  <main class="landing" data-testid="landing-page">
+    <div class="landing-shell">
+
+      <article class="about-card" data-testid="about-card">
+        <header class="card-title">
+          <img src="assets/icons/this_computer.png" alt="">
+          LeG.exe - Despre aplicatie
+        </header>
+        <div class="card-body">
+          <h2>LeG - Learning by Playing Web Games</h2>
+          <p class="lead">
+            Bun venit in <b>LeG</b>! Aplicatia ta nostalgica in stil Windows 95 prin care inveti,
+            jucandu-te, componentele unui calculator. Asambleaza un PC, identifica piese, asociaza
+            specificatii si infrunta provocarea finala in mini-jocul cu timp limitat.
+          </p>
+
+          <div class="features">
+            <div class="feat">
+              <img src="assets/icons/tools.png" alt="">
+              <div><b>6 jocuri progressive</b><span>Drag &amp; drop, identificare, match, cabluri, mini-quiz, istorie.</span></div>
+            </div>
+            <div class="feat">
+              <img src="assets/icons/search.png" alt="">
+              <div><b>Enciclopedie hardware</b><span>CPU, GPU, RAM, SSD/HDD, PSU, periferice.</span></div>
+            </div>
+            <div class="feat">
+              <img src="assets/icons/news.png" alt="">
+              <div><b>Leaderboard cu RSS</b><span>Clasament global exportat ca feed RSS 2.0.</span></div>
+            </div>
+            <div class="feat">
+              <img src="assets/icons/program.png" alt="">
+              <div><b>3 niveluri dificultate</b><span>Progresul tau este salvat per joc.</span></div>
+            </div>
+          </div>
+
+          <div class="sep"></div>
+          <p class="muted" style="font-size:11px">
+            Stack: PHP 8.2 (vanilla MVC), SQLite, JWT, AJAX, HTML + CSS + JS.
+          </p>
+        </div>
+      </article>
+
+      <article class="auth-card" data-testid="auth-card">
+        <header class="card-title">
+          <img src="assets/icons/password_manager.png" alt="">
+          <h2 class="card-heading">Autentificare</h2>
+        </header>
+        <div class="card-body">
+          <div class="auth-tabs" data-testid="auth-tabs">
+            <button class="active" data-tab="login" data-testid="tab-login">Login</button>
+            <button data-tab="register" data-testid="tab-register">Inregistrare</button>
+          </div>
+
+          <form id="form-login" class="col" style="margin-top:10px" data-testid="form-login">
+            <label>Nume utilizator</label>
+            <input class="input" name="username" required maxlength="32" data-testid="login-username">
+            <label>Parola</label>
+            <input class="input" name="password" type="password" required maxlength="64" data-testid="login-password">
+            <div style="text-align:right;margin-top:8px">
+              <button class="btn" type="submit" data-testid="login-submit">
+                <img src="assets/icons/program.png" alt="" style="width:14px;height:14px"> Conectare
+              </button>
+            </div>
+            <div class="msg-error" id="login-msg" data-testid="login-msg"></div>
+          </form>
+
+          <form id="form-register" class="col" style="margin-top:10px;display:none" data-testid="form-register">
+            <label>Nume utilizator (3-32 caractere)</label>
+            <input class="input" name="username" required maxlength="32" pattern="[a-zA-Z0-9_\-\.]{3,32}" data-testid="register-username">
+            <label>Email (optional)</label>
+            <input class="input" name="email" type="email" maxlength="120" data-testid="register-email">
+            <label>Parola (min 6)</label>
+            <input class="input" name="password" type="password" required minlength="6" maxlength="64" data-testid="register-password">
+            <label>Confirma parola</label>
+            <input class="input" name="password2" type="password" required minlength="6" maxlength="64" data-testid="register-password2">
+            <label>Alege o imagine de profil</label>
+            <div class="icon-grid-sel" id="reg-icons" data-testid="register-icons"></div>
+            <div style="text-align:right;margin-top:8px">
+              <button class="btn" type="submit" data-testid="register-submit">
+                <img src="assets/icons/program.png" alt="" style="width:14px;height:14px"> Inregistrare
+              </button>
+            </div>
+            <div class="msg-error" id="register-msg" data-testid="register-msg"></div>
+          </form>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/sounds.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

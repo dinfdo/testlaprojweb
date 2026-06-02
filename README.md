@@ -1,0 +1,8 @@
+.env fisier de creat
+
+
+JWT_SECRET=8373f4910e11cdd3ab35dfc3d9c33f4b
+JWT_TTL_SECONDS=604800
+SQLITE_PATH=./data/leg.sqlite
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin123

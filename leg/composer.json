@@ -1,0 +1,15 @@
+{
+    "name": "roxan/app",
+    "autoload": {
+        "psr-4": {
+            "LeG\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "CroxyL",
+            "email": "roxana.basarab7@gmail.com"
+        }
+    ],
+    "require": {}
+}

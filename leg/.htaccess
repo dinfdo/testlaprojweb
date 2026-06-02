@@ -1,0 +1,29 @@
+RewriteEngine On
+
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
+RewriteCond %{REQUEST_URI} ^(.*/)?api(/.*)?$
+RewriteRule ^api(/.*)?$ api/index.php [QSA,L]
+
+RewriteCond %{THE_REQUEST} ^[A-Z]+\ (.*/)(app|admin|encyclopedia)/[\ ?]
+RewriteRule ^(app|admin|encyclopedia)/$ %1$1 [R=301,L]
+
+RewriteRule ^app$           app.html          [L]
+RewriteRule ^admin$         admin.html        [L]
+RewriteRule ^encyclopedia$  encyclopedia.html [L]
+RewriteRule ^rss(\.xml)?/?$ api/index.php?__rss_direct=1 [QSA,L]
+
+RewriteRule \.(js|css|png|jpe?g|gif|ico|svg|woff2?|ttf|eot|jfif|map)$ - [L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^ index.html [L]
+
+RewriteRule ^(data|src|vendor)/ - [F,L]
