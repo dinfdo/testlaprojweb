@@ -58,6 +58,7 @@ $router->delete('/api/admin/users/{id}',   [AdminController::class, 'deleteUser'
 $router->get ('/api/admin/stats',          [AdminController::class, 'stats']);
 $router->post('/api/admin/components',     [AdminController::class, 'createComponent']);
 $router->delete('/api/admin/components/{id}', [AdminController::class, 'deleteComponent']);
+$router->get ('/api/admin/icons',                  [AdminController::class, 'icons']);
 $router->get ('/api/admin/export/users.csv',       [AdminController::class, 'exportUsersCsv']);
 $router->get ('/api/admin/export/scores.json',     [AdminController::class, 'exportScoresJson']);
 $router->post('/api/admin/import/components',      [AdminController::class, 'importComponents']);

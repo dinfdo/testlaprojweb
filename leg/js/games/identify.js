@@ -40,7 +40,7 @@
         ${dots()}
         <div class="question-card" data-testid="question-card">
           <img src="assets/hardware/${esc(photoSlug)}.jpg"
-               onerror="this.onerror=null;this.src='assets/icons/${esc(r.icon || 'search.png')}'"
+               onerror="this.onerror=null;this.src='${LeG.iconSrc(r.icon || 'search.png')}'"
                style="width:96px;height:96px;object-fit:contain;background:#fff;border:1px solid #888"
                alt=""/>
           <div>${esc(r.question)}</div>

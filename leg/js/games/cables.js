@@ -28,12 +28,12 @@
       host.setProgress(`Cabluri conectate: ${solved}/${total}`);
       const cHtml = cables.map((c, i) =>
         `<div class="cable" data-target="${esc(c.target)}" data-i="${i}" data-testid="cable-${esc(c.target)}">
-           <img src="assets/icons/${esc(c.icon || 'tools.png')}" style="width:18px;height:18px;vertical-align:middle" alt=""/>
+           <img src="${LeG.iconSrc(c.icon || 'tools.png')}" style="width:18px;height:18px;vertical-align:middle" alt=""/>
            ${esc(c.cable)}
          </div>`).join('');
       const tHtml = targets.map((t, i) =>
         `<div class="t-slot" data-target="${esc(t.target)}" data-i="${i}" data-testid="t-slot-${esc(t.target)}">
-           <img src="assets/icons/${esc(t.icon || 'tools.png')}" alt=""/>
+           <img src="${LeG.iconSrc(t.icon || 'tools.png')}" alt=""/>
            <b>${esc(t.label)}</b>
            <span style="margin-left:auto;font-size:11px;color:#666">conector?</span>
          </div>`).join('');

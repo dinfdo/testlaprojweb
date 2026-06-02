@@ -91,9 +91,9 @@
               <div class="enc-photo">
                 <img src="${photoSrc}"
                      alt="${esc(c.name)}"
-                     onerror="this.onerror=null;this.src='assets/icons/${esc(c.icon)}';this.classList.add('enc-photo-fallback')"/>
+                     onerror="this.onerror=null;this.src='${LeG.iconSrc(c.icon)}';this.classList.add('enc-photo-fallback')"/>
               </div>
-              <div class="h"><img src="assets/icons/${esc(c.icon)}" alt=""/><b>${esc(c.name)}</b></div>
+              <div class="h"><img src="${LeG.iconSrc(c.icon)}" alt=""/><b>${esc(c.name)}</b></div>
               <div class="desc">${esc(c.description)}</div>
               <div class="specs">${specs}</div>
             </div>`;
@@ -236,7 +236,7 @@
       const max = Math.max(1, ...res.progress.map(p => +p.best_score || 0));
       const rows = res.progress.map(p => `
         <div class="prog-row" data-testid="prog-row-${esc(p.slug)}">
-          <img src="assets/icons/${esc(p.icon)}" alt=""/>
+          <img src="${LeG.iconSrc(p.icon)}" alt=""/>
           <div>
             <div><b>${esc(p.name)}</b></div>
             <div class="prog-bar"><div class="fill" style="width:${Math.round(((+p.best_score)/max)*100)}%"></div></div>
@@ -357,7 +357,15 @@
             </div>
             <div class="row">
               <div style="flex:1"><label>Categorie</label><input class="input" name="category" value="core"/></div>
-              <div style="flex:1"><label>Icon (din /assets/icons)</label><input class="input" name="icon" value="this_computer.png"/></div>
+              <div style="flex:1">
+                <label>Icon</label>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <img id="ap-icon-preview" src="assets/icons/this_computer.png" style="width:24px;height:24px;border:1px solid #aaa"/>
+                  <select class="input" name="icon" id="ap-icon-select" style="flex:1">
+                    <option value="this_computer.png">Se incarca...</option>
+                  </select>
+                </div>
+              </div>
             </div>
             <label>Descriere scurta</label><input class="input" name="short_desc" required maxlength="160"/>
             <label>Descriere completa</label><textarea class="input" name="description" rows="3" required></textarea>
@@ -448,7 +456,7 @@
         const rows = (r.components||[]).map(c => `
           <tr data-testid="admin-comp-${c.id}">
             <td>${c.id}</td>
-            <td><img src="${api.basePath}/assets/icons/${esc(c.icon)}" style="width:18px;height:18px;vertical-align:middle"/> ${esc(c.name)}</td>
+            <td><img src="${api.basePath}/${LeG.iconSrc(c.icon)}" style="width:18px;height:18px;vertical-align:middle"/> ${esc(c.name)}</td>
             <td>${esc(c.category)}</td><td>${esc(c.slug)}</td>
             <td><button class="btn" data-dc="${c.id}" data-testid="del-comp-${c.id}">Sterge</button></td>
           </tr>`).join('');
@@ -494,7 +502,24 @@
       } catch (err) { msg.textContent = err.message; msg.className = 'msg-error'; }
     });
 
-    apLoadStats(); apLoadUsers(); apLoadComponents();
+    async function apLoadIcons() {
+      try {
+        const r = await api.get('/admin/icons');
+        const sel = q('ap-icon-select');
+        if (!sel) return;
+        sel.innerHTML = (r.icons || []).map(ic =>
+          `<option value="${esc(ic)}">${esc(ic)}</option>`
+        ).join('');
+        sel.value = 'this_computer.png';
+        const preview = q('ap-icon-preview');
+        if (preview) preview.src = LeG.iconSrc(sel.value);
+        sel.addEventListener('change', () => {
+          if (preview) preview.src = LeG.iconSrc(sel.value);
+        });
+      } catch (e) { /* non-critical */ }
+    }
+
+    apLoadStats(); apLoadUsers(); apLoadComponents(); apLoadIcons();
   }
 
   function launchVideo() {

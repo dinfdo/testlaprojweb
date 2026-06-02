@@ -108,6 +108,12 @@
     logout() { setToken(null); setRefresh(null); setUser(null); },
   };
 
+  function iconSrc(icon) {
+    if (!icon) return 'assets/icons/tools.png';
+    return 'assets/icons/' + icon;
+  }
+
   global.LeG = global.LeG || {};
   global.LeG.api = api;
+  global.LeG.iconSrc = iconSrc;
 })(window);

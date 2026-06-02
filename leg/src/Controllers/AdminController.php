@@ -75,6 +75,22 @@ class AdminController
         Response::json(['ok' => true]);
     }
 
+    public function icons(): void
+    {
+        Auth::requireAdmin();
+        $dir    = __DIR__ . '/../../assets/icons/';
+        $exts   = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'];
+        $result = [];
+        foreach (scandir($dir) as $f) {
+            if ($f === '.' || $f === '..') continue;
+            $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
+            if (!in_array($ext, $exts, true)) continue;
+            $result[] = $f;
+        }
+        sort($result);
+        Response::json(['icons' => $result]);
+    }
+
     public function exportUsersCsv(): void
     {
         Auth::requireAdmin();

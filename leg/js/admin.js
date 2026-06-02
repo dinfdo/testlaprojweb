@@ -82,7 +82,7 @@
       const rows = (r.components || []).map(c => `
         <tr data-testid="admin-comp-${c.id}">
           <td>${c.id}</td>
-          <td><img src="${api.basePath}/assets/icons/${esc(c.icon)}" style="width:18px;height:18px;vertical-align:middle"/> ${esc(c.name)}</td>
+          <td><img src="${api.basePath}/${LeG.iconSrc(c.icon)}" style="width:18px;height:18px;vertical-align:middle"/> ${esc(c.name)}</td>
           <td>${esc(c.category)}</td>
           <td>${esc(c.slug)}</td>
           <td><button class="btn" data-del-comp="${c.id}" data-testid="del-comp-${c.id}">Sterge</button></td>

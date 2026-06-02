@@ -31,7 +31,7 @@
       ).join('');
       const targetsHtml = targets.map((t, i) =>
         `<div class="match-target" data-slug="${esc(t.slug)}" data-i="${i}" data-testid="match-target-${esc(t.slug)}">
-           <img src="assets/icons/${esc(t.icon)}" alt=""/><b>${esc(t.name)}</b>
+           <img src="${LeG.iconSrc(t.icon)}" alt=""/><b>${esc(t.name)}</b>
          </div>`).join('');
       host.stage(`
         <div class="match-wrap">

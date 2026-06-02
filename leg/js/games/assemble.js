@@ -29,7 +29,7 @@
       host.setProgress(`Piese plasate: ${placed}/${totalSlots}`);
       const piecesHtml = pieces.map((p, i) =>
         `<div class="part-chip" data-slug="${esc(p.slug)}" data-idx="${i}" data-testid="part-${esc(p.slug)}">
-            <img src="assets/icons/${esc(p.icon)}" alt=""/>
+            <img src="${LeG.iconSrc(p.icon)}" alt=""/>
             <span>${esc(p.name)}</span>
          </div>`).join('');
       const slotsHtml = slots.map(s =>
