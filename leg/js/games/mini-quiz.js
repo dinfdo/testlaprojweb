@@ -24,6 +24,7 @@
     const timePerRound = res.data.time_per_round;
     const points = res.data.points_per_correct;
     let idx = 0;
+    let acceptingAnswer = false;
     const results = new Array(rounds.length).fill(null);
 
     function renderRound() {
@@ -55,11 +56,19 @@
       host.qsa('.choice-grid button').forEach(b => {
         b.addEventListener('click', () => answer(b.dataset.slug, b));
       });
+      acceptingAnswer = false;
+      setTimeout(() => { acceptingAnswer = true; }, 140);
     }
 
     function answer(slug, btn) {
       if (!alive) return;
+      if (slug !== null && !acceptingAnswer) return;
+      acceptingAnswer = false;
       if (roundTimer) clearInterval(roundTimer); roundTimer = null;
+      host.qsa('.choice-grid button').forEach(b => {
+        b.disabled = true;
+        b.style.pointerEvents = 'none';
+      });
       const r = rounds[idx];
       const ok = slug === r.answer;
       results[idx] = ok;

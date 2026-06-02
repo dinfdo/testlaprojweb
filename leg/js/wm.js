@@ -55,13 +55,14 @@
     task.dataset.winId = id;
     task.dataset.testid = 'task-' + (opts.testid || id);
     task.innerHTML = `${opts.icon ? `<img src="${opts.icon}" alt=""/>` : ''}<span>${opts.title}</span>`;
-    task.addEventListener('click', () => toggleMinimize(id));
+    task.addEventListener('click', () => activateTask(id));
     document.getElementById('tasks').appendChild(task);
 
-    el.addEventListener('mousedown', () => focus(id), true);
+    const focusEvent = window.PointerEvent ? 'pointerdown' : 'mousedown';
+    el.addEventListener(focusEvent, () => focus(id), true);
 
     const titleEl = el.querySelector('.win-title');
-    titleEl.addEventListener('mousedown', startDrag);
+    titleEl.addEventListener(focusEvent, startDrag);
 
     el.querySelector('[data-act="close"]').addEventListener('click', () => closeWindow(id));
     el.querySelector('[data-act="min"]').addEventListener('click', () => toggleMinimize(id));
@@ -101,6 +102,20 @@
     w.taskEl.classList.add('active');
   }
 
+  function activateTask(id) {
+    const w = openWindows.get(id);
+    if (!w) return;
+    if (w.minimized) {
+      focus(id);
+      return;
+    }
+    if (w.el.classList.contains('active')) {
+      toggleMinimize(id);
+      return;
+    }
+    focus(id);
+  }
+
   function toggleMinimize(id) {
     const w = openWindows.get(id);
     if (!w) return;
@@ -137,29 +152,50 @@
 
   let dragging = null;
   function startDrag(e) {
+    if (e.button != null && e.button !== 0) return;
     if (e.target.closest('.title-r')) return;
     const win = e.currentTarget.parentElement;
     const wEntry = openWindows.get(win.dataset.winId);
     if (wEntry && wEntry.maximized) return;
+    e.preventDefault();
+    focus(win.dataset.winId);
     dragging = {
       el: win,
+      pointerId: e.pointerId,
+      pointerMode: e.type.indexOf('pointer') === 0,
       offX: e.clientX - win.offsetLeft,
       offY: e.clientY - win.offsetTop,
     };
-    document.addEventListener('mousemove', onMove);
-    document.addEventListener('mouseup', stopDrag);
+    if (dragging.pointerMode) {
+      e.currentTarget.setPointerCapture(e.pointerId);
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', stopDrag);
+      document.addEventListener('pointercancel', stopDrag);
+    } else {
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', stopDrag);
+    }
   }
   function onMove(e) {
     if (!dragging) return;
+    if (dragging.pointerMode && e.pointerId !== dragging.pointerId) return;
     const x = Math.max(0, Math.min(window.innerWidth  - 60, e.clientX - dragging.offX));
     const y = Math.max(0, Math.min(window.innerHeight - 40, e.clientY - dragging.offY));
     dragging.el.style.left = x + 'px';
     dragging.el.style.top  = y + 'px';
   }
-  function stopDrag() {
+  function stopDrag(e) {
+    if (dragging && dragging.pointerMode && e && e.pointerId !== dragging.pointerId) return;
+    const pointerMode = dragging && dragging.pointerMode;
     dragging = null;
-    document.removeEventListener('mousemove', onMove);
-    document.removeEventListener('mouseup', stopDrag);
+    if (pointerMode) {
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', stopDrag);
+      document.removeEventListener('pointercancel', stopDrag);
+    } else {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', stopDrag);
+    }
   }
 
   function setBody(id, html) {

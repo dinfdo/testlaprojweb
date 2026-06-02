@@ -19,6 +19,7 @@
     const rounds = res.data.rounds;
     const points = res.data.points_per_correct;
     let idx = 0;
+    let acceptingAnswer = false;
     const results = new Array(rounds.length).fill(null);
 
     function dots() {
@@ -48,6 +49,12 @@
         <div class="choice-grid">${choices}</div>`);
       host.qsa('.choice-grid button').forEach(btn => {
         btn.addEventListener('click', () => {
+          if (!acceptingAnswer) return;
+          acceptingAnswer = false;
+          host.qsa('.choice-grid button').forEach(b => {
+            b.disabled = true;
+            b.style.pointerEvents = 'none';
+          });
           const ok = btn.dataset.slug === r.answer;
           btn.classList.add(ok ? 'correct' : 'wrong');
           if (ok) {
@@ -63,6 +70,8 @@
           setTimeout(() => { idx++; renderRound(); }, 900);
         });
       });
+      acceptingAnswer = false;
+      setTimeout(() => { acceptingAnswer = true; }, 140);
     }
 
     function finish() {
