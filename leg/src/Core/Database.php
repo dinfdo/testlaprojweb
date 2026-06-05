@@ -103,18 +103,18 @@ class Database
         $admin = getenv('ADMIN_USERNAME') ?: 'admin';
         $comps = require __DIR__ . '/../../data/components_seed.php';
         $games = [
-            ['assemble-pc',      'Asamblare PC',             'drag_drop',
-             'Trage fiecare componenta in slot-ul corect al placii de baza.', 'tools.png', 3],
-            ['identify-hw',      'Identifica Hardware',       'identify',
-             'Citeste descrierea si alege componenta corecta.', 'search.png', 3],
-            ['match-specs',      'Potriveste Specificatiile', 'match',
-             'Asociaza fiecare specificatie cu componenta din care face parte.', 'spreadsheet_program.png', 3],
+            ['assemble-pc',      'Asamblare PC',              'drag_drop',
+             'Trage fiecare componentă în slotul corect al plăcii de bază.', 'tools.png', 3],
+            ['identify-hw',      'Identifică Hardware',       'identify',
+             'Citește descrierea și alege componenta corectă.', 'search.png', 3],
+            ['match-specs',      'Potrivește Specificațiile', 'match',
+             'Asociază fiecare specificație cu componenta din care face parte.', 'spreadsheet_program.png', 3],
             ['cable-manager',    'Cable Manager',             'cables',
-             'Conecteaza cablurile PSU-ului la componentele potrivite.', 'briefcase.png', 3],
-            ['mini-quiz',        'Provocarea Finala',         'mini_quiz',
-             'Mini-joc bonus: raspunde la intrebari intr-un timp limita.', 'minecraft.png', 3],
+             'Conectează cablurile PSU-ului la componentele potrivite.', 'briefcase.png', 3],
+            ['mini-quiz',        'Provocarea Finală',         'mini_quiz',
+             'Mini-joc bonus: răspunde la întrebări într-un timp limită.', 'minecraft.png', 3],
             ['history-timeline', 'Linia Timpului',            'timeline',
-             'Aranjaza evenimentele din istoria calculatoarelor in ordine cronologica.', 'webpage_file.png', 3],
+             'Aranjează evenimentele din istoria calculatoarelor în ordine cronologică.', 'webpage_file.png', 3],
         ];
 
         $st = $db->prepare('SELECT COUNT(*) FROM users WHERE username = ?');

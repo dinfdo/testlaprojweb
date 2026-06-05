@@ -14,7 +14,7 @@
 
     const host = createGameHost({
       winId: 'g-mini',
-      title: 'Joc: Provocarea Finala',
+      title: 'Joc: Provocarea Finală',
       icon: 'assets/icons/minecraft.png',
       timeLimit: 0,
       onClose: () => { alive = false; if (roundTimer) { clearInterval(roundTimer); roundTimer = null; } },
@@ -31,7 +31,7 @@
       if (!alive) return;
       if (idx >= rounds.length) return finish();
       const r = rounds[idx];
-      host.setProgress(`Intrebare ${idx + 1}/${rounds.length}`);
+      host.setProgress(`Întrebare ${idx + 1}/${rounds.length}`);
       const choices = r.choices.map(c =>
         `<button class="btn" data-slug="${esc(c.slug)}" data-testid="mq-choice-${esc(c.slug)}">${esc(c.name)}</button>`
       ).join('');
@@ -84,7 +84,7 @@
           if (b.dataset.slug === r.answer) b.classList.add('correct');
         });
         host.addScore(-10);
-        host.setInfo('Gresit!');
+        host.setInfo('Greșit!');
         LeG.snd.error();
       }
       setTimeout(() => { idx++; renderRound(); }, 450);
@@ -97,7 +97,7 @@
       resultScreen(host, {
         gameId, slug: 'mini-quiz', difficulty,
         success: right >= Math.ceil(rounds.length * 0.7),
-        mainText: `Ai raspuns corect la ${right}/${rounds.length} intrebari.`,
+        mainText: `Ai răspuns corect la ${right}/${rounds.length} întrebări.`,
       });
     }
 

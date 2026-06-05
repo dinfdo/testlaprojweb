@@ -11,20 +11,20 @@ class Score
     {
         $db = Database::pdo();
         $st = $db->prepare(
-            'INSERT INTO scores (user_id, game_id, score, time_seconds, difficulty)
-             VALUES (?,?,?,?,?)'
+            "INSERT INTO scores (user_id, game_id, score, time_seconds, difficulty, played_at)
+             VALUES (?,?,?,?,?,datetime('now','localtime'))"
         );
         $st->execute([$userId, $gameId, $score, $time, $difficulty]);
         $id = (int)$db->lastInsertId();
 
         $up = $db->prepare(
-            'INSERT INTO user_progress (user_id, game_id, best_score, best_difficulty, plays, last_played)
-             VALUES (?,?,?,?,1,datetime(\'now\'))
+            "INSERT INTO user_progress (user_id, game_id, best_score, best_difficulty, plays, last_played)
+             VALUES (?,?,?,?,1,datetime('now','localtime'))
              ON CONFLICT(user_id, game_id) DO UPDATE SET
                 best_score = MAX(best_score, excluded.best_score),
                 best_difficulty = MAX(best_difficulty, excluded.best_difficulty),
                 plays = plays + 1,
-                last_played = datetime(\'now\')'
+                last_played = datetime('now','localtime')"
         );
         $up->execute([$userId, $gameId, $score, $difficulty]);
 

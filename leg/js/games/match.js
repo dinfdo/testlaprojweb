@@ -14,7 +14,7 @@
 
     const host = createGameHost({
       winId: 'g-match',
-      title: 'Joc: Potriveste specificatiile',
+      title: 'Joc: Potrivește specificațiile',
       icon: 'assets/icons/spreadsheet_program.png',
       timeLimit: res.data.time_limit,
     });
@@ -36,7 +36,7 @@
       host.stage(`
         <div class="match-wrap">
           <div class="match-col">
-            <h4>Specificatii (trage-le)</h4>
+            <h4>Specificații (trage-le)</h4>
             <div class="match-list" id="match-items">${itemsHtml}</div>
           </div>
           <div class="match-col">
@@ -90,7 +90,7 @@
       if (success) snd.success();
       resultScreen(host, {
         gameId, slug: 'match-specs', difficulty, success,
-        mainText: success ? 'Toate specificatiile potrivite!' : 'Timpul a expirat.',
+        mainText: success ? 'Toate specificațiile potrivite!' : 'Timpul a expirat.',
       });
     }
 

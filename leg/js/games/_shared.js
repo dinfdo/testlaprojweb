@@ -87,13 +87,13 @@
     return host.submit(gameId, difficulty).then(() => {
       host.stage(`
         <div class="result-screen" data-testid="result-screen">
-          <h2>${success ? 'Felicitari!' : 'Sfarsit'}</h2>
+          <h2>${success ? 'Felicitări!' : 'Sfârșit'}</h2>
           <div class="big-score" data-testid="result-score">${host.getScore()} puncte</div>
           <div>${mainText || ''}</div>
           <div class="actions">
-            <button class="btn" id="btn-replay" data-testid="btn-replay">Inca o data</button>
+            <button class="btn" id="btn-replay" data-testid="btn-replay">Încă o dată</button>
             <button class="btn" id="btn-leaderboard" data-testid="btn-leaderboard">Vezi clasament</button>
-            <button class="btn" id="btn-close" data-testid="btn-close">Inchide</button>
+            <button class="btn" id="btn-close" data-testid="btn-close">Închide</button>
           </div>
         </div>`);
       const replay = host.qs('#btn-replay');

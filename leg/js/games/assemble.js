@@ -38,7 +38,7 @@
          </div>`).join('');
       host.stage(`
         <div>
-          <div><b>Trage fiecare componenta in slot-ul corect:</b></div>
+          <div><b>Trage fiecare componentă în slotul corect:</b></div>
           <div class="parts-bar" id="parts-bar">${piecesHtml}</div>
           <div class="board" id="board">${slotsHtml}</div>
         </div>`);
@@ -78,7 +78,7 @@
               return true;
             }
             slot.classList.add('wrong');
-            host.setInfo('Gresit! Slot-ul nu accepta ' + chip.querySelector('span').textContent + '.');
+            host.setInfo('Greșit! Slotul nu acceptă ' + chip.querySelector('span').textContent + '.');
             snd.error();
             setTimeout(() => slot.classList.remove('wrong'), 600);
             host.addScore(-10);
@@ -94,7 +94,7 @@
       resultScreen(host, {
         gameId, slug: 'assemble-pc', difficulty,
         success,
-        mainText: success ? 'Ai asamblat PC-ul cu succes!' : 'Timpul a expirat. Mai incearca!',
+        mainText: success ? 'Ai asamblat PC-ul cu succes!' : 'Timpul a expirat. Mai încearcă!',
       });
     }
 

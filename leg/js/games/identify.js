@@ -12,7 +12,7 @@
 
     const host = createGameHost({
       winId: 'g-identify',
-      title: 'Joc: Identifica Hardware',
+      title: 'Joc: Identifică Hardware',
       icon: 'assets/icons/search.png',
       timeLimit: res.data.time_limit,
     });
@@ -32,7 +32,7 @@
     function renderRound() {
       if (idx >= rounds.length) return finish();
       const r = rounds[idx];
-      host.setProgress(`Intrebare ${idx + 1}/${rounds.length}`);
+      host.setProgress(`Întrebare ${idx + 1}/${rounds.length}`);
       const choices = r.choices.map(c =>
         `<button class="btn" data-slug="${esc(c.slug)}" data-testid="choice-${esc(c.slug)}">${esc(c.name)}</button>`
       ).join('');
@@ -66,7 +66,7 @@
             host.addScore(-10); LeG.snd.error();
           }
           results[idx] = ok;
-          host.setInfo(ok ? 'Corect! +' + points : 'Gresit!');
+          host.setInfo(ok ? 'Corect! +' + points : 'Greșit!');
           setTimeout(() => { idx++; renderRound(); }, 900);
         });
       });
@@ -79,7 +79,7 @@
       if (right === rounds.length) LeG.snd.success();
       resultScreen(host, {
         gameId, slug: 'identify-hw', difficulty, success: right === rounds.length,
-        mainText: `Ai raspuns corect la ${right}/${rounds.length} intrebari.`,
+        mainText: `Ai răspuns corect la ${right}/${rounds.length} întrebări.`,
       });
     }
 

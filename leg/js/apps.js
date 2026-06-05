@@ -14,12 +14,12 @@
     const win = wm.openWindow({
       id: 'games-launcher', singleton: true, testid: 'games-launcher',
       title: 'Jocuri LeG', icon: 'assets/icons/tools.png', width: 620, height: 420,
-      content: '<div class="muted">Se incarca...</div>',
+      content: '<div class="muted">Se încarcă...</div>',
     });
     try {
       const res = await api.get('/games');
       const html = [];
-      html.push('<p>Alege un joc pentru a invata distrandu-te:</p>');
+      html.push('<p>Alege un joc pentru a învăța distrându-te:</p>');
       html.push('<div class="enc-list" data-testid="games-list">');
       res.games.forEach(g => {
         html.push(`
@@ -29,12 +29,12 @@
             <div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
               <label style="margin:0;font-size:11px">Dificultate:</label>
               <select class="input" style="width:120px" data-diff="${g.id}" data-testid="diff-${esc(g.slug)}">
-                <option value="1">1 - Usor</option>
+                <option value="1">1 - Ușor</option>
                 <option value="2">2 - Mediu</option>
                 <option value="3">3 - Greu</option>
               </select>
               <button class="btn" data-play="${g.id}" data-slug="${esc(g.slug)}" data-testid="play-${esc(g.slug)}">
-                <img src="assets/icons/program.png" style="width:14px;height:14px" alt=""/> Joaca
+                <img src="assets/icons/program.png" style="width:14px;height:14px" alt=""/> Joacă
               </button>
             </div>
           </div>`);
@@ -67,8 +67,8 @@
       const allCats = [...new Set(res.components.map(c => c.category))];
       const cats = ['all'].concat(catOrder.filter(c => c !== 'all' && allCats.includes(c)))
                           .concat(allCats.filter(c => !catOrder.includes(c)));
-      const labels = { all: 'Toate', core: 'Componente de baza', storage: 'Stocare', power: 'Alimentare',
-                       cooling: 'Racire', peripheral: 'Periferice', chassis: 'Carcasa', history: 'Istorie' };
+      const labels = { all: 'Toate', core: 'Componente de bază', storage: 'Stocare', power: 'Alimentare',
+                       cooling: 'Răcire', peripheral: 'Periferice', chassis: 'Carcasă', history: 'Istorie' };
       const historyImages = {
         'history-abacus':      'abacus.jfif',
         'history-babbage':     'Babbage.jpg',
@@ -136,7 +136,7 @@
     async function render() {
       const periods = [
         ['all',   'Toate timpurile'],
-        ['week',  'Saptamana'],
+        ['week',  'Săptămâna'],
         ['month', 'Luna'],
       ];
       const periodTabs = periods.map(([k, label]) =>
@@ -199,8 +199,8 @@
           </tr>`).join('');
         table = `
           <table class="lb-table" data-testid="lb-table">
-            <thead><tr><th>#</th><th>Jucator</th><th>Scor total</th><th>Jocuri</th></tr></thead>
-            <tbody>${tr || '<tr><td colspan="4" class="muted">Niciun rezultat in perioada selectata.</td></tr>'}</tbody>
+            <thead><tr><th>#</th><th>Jucător</th><th>Scor total</th><th>Jocuri</th></tr></thead>
+            <tbody>${tr || '<tr><td colspan="4" class="muted">Niciun rezultat în perioada selectată.</td></tr>'}</tbody>
           </table>`;
       } else {
         const tr = rows.map((r, i) => `
@@ -215,7 +215,7 @@
         table = `
           <table class="lb-table" data-testid="lb-table">
             <thead><tr><th>#</th><th>Jucator</th><th>Scor</th><th>Timp</th><th>Dif.</th><th>Data</th></tr></thead>
-            <tbody>${tr || '<tr><td colspan="6" class="muted">Niciun rezultat in perioada selectata.</td></tr>'}</tbody>
+            <tbody>${tr || '<tr><td colspan="6" class="muted">Niciun rezultat în perioada selectată.</td></tr>'}</tbody>
           </table>`;
       }
       document.getElementById('lb-content').innerHTML = table;
@@ -246,7 +246,7 @@
         </div>`).join('');
       const body = `
         <p>Scor cumulat: <b>${total}</b></p>
-        ${rows || '<div class="muted">Joaca primul joc pentru a vedea progresul aici.</div>'}`;
+        ${rows || '<div class="muted">Joacă primul joc pentru a vedea progresul aici.</div>'}`;
       wm.setBody('prog', body);
     } catch (e) {
       wm.setBody('prog', '<div class="msg-error">' + esc(e.message) + '</div>');
@@ -276,11 +276,11 @@
           <div class="col" style="gap:4px">
             <div style="font-size:14px;font-weight:bold">${esc(u.username)}</div>
             <div style="font-size:11px">Email: ${esc(u.email || '-')}</div>
-            <div style="font-size:11px">Inregistrat: ${esc((u.created_at || '').slice(0, 10))}</div>
+            <div style="font-size:11px">Înregistrat: ${esc((u.created_at || '').slice(0, 10))}</div>
           </div>
         </div>
         <div class="sep"></div>
-        <div style="margin:6px 0 4px;font-size:12px"><b>Schimba imaginea de profil:</b></div>
+        <div style="margin:6px 0 4px;font-size:12px"><b>Schimbă imaginea de profil:</b></div>
         <div class="icon-grid-sel" id="profile-icons" data-testid="profile-icons">
           ${iconsHtml}
         </div>
@@ -349,7 +349,7 @@
         <table class="lb-table" id="ap-users" data-testid="admin-users"></table>
         <h3 style="margin-top:14px">Componente</h3>
         <details>
-          <summary style="cursor:pointer">+ Adauga componenta</summary>
+          <summary style="cursor:pointer">+ Adaugă componentă</summary>
           <form id="ap-form-comp" class="col" style="background:#fff;padding:10px;border:2px inset #fff;margin-top:6px" data-testid="form-comp">
             <div class="row">
               <div style="flex:1"><label>Slug</label><input class="input" name="slug" required pattern="[a-z0-9\\-]+"/></div>
@@ -367,22 +367,22 @@
                 </div>
               </div>
             </div>
-            <label>Descriere scurta</label><input class="input" name="short_desc" required maxlength="160"/>
-            <label>Descriere completa</label><textarea class="input" name="description" rows="3" required></textarea>
-            <button class="btn" type="submit" data-testid="comp-submit">Salveaza</button>
+            <label>Descriere scurtă</label><input class="input" name="short_desc" required maxlength="160"/>
+            <label>Descriere completă</label><textarea class="input" name="description" rows="3" required></textarea>
+            <button class="btn" type="submit" data-testid="comp-submit">Salvează</button>
             <div class="msg-error" id="ap-comp-msg"></div>
           </form>
         </details>
         <details style="margin-top:6px">
-          <summary style="cursor:pointer">&#8593; Importa componente (CSV / JSON)</summary>
+          <summary style="cursor:pointer">&#8593; Importă componente (CSV / JSON)</summary>
           <form id="ap-form-import" class="col" style="background:#fff;padding:10px;border:2px inset #fff;margin-top:6px" data-testid="form-import">
-            <label>Fisier <b>.csv</b> sau <b>.json</b></label>
+            <label>Fișier <b>.csv</b> sau <b>.json</b></label>
             <input type="file" class="input" name="file" accept=".csv,.json" required data-testid="import-file"/>
             <div style="font-size:11px;color:#555;margin:2px 0 6px">
               CSV: coloane <code>slug,name,category,short_desc,description,icon,specs</code><br/>
               JSON: <code>{"components":[{...}]}</code> sau array direct
             </div>
-            <button class="btn" type="submit" data-testid="import-submit">Importa</button>
+            <button class="btn" type="submit" data-testid="import-submit">Importă</button>
             <div id="ap-import-msg" style="margin-top:6px"></div>
           </form>
         </details>
@@ -434,12 +434,12 @@
             <td><img src="${api.basePath}/assets/profiles/${esc(usr.profile_icon)}" style="width:18px;height:18px;vertical-align:middle"/> ${esc(usr.username)}</td>
             <td>${esc(usr.email||'-')}</td><td>${usr.is_admin?'Admin':'User'}</td>
             <td>${esc(usr.created_at)}</td>
-            <td>${usr.is_admin?'':`<button class="btn" data-du="${usr.id}" data-testid="del-user-${usr.id}">Sterge</button>`}</td>
+            <td>${usr.is_admin?'':`<button class="btn" data-du="${usr.id}" data-testid="del-user-${usr.id}">Șterge</button>`}</td>
           </tr>`).join('');
         tb.innerHTML = `<thead><tr><th>#</th><th>Username</th><th>Email</th><th>Rol</th><th>Creat</th><th></th></tr></thead>
           <tbody>${rows||'<tr><td colspan="6" class="muted" style="padding:8px">Niciun utilizator.</td></tr>'}</tbody>`;
         tb.querySelectorAll('[data-du]').forEach(b => b.onclick = async () => {
-          if (!confirm('Sigur stergi userul?')) return;
+          if (!confirm('Sigur ștergi userul?')) return;
           try { await api.delete('/admin/users/' + b.dataset.du); apLoadUsers(); apLoadStats(); }
           catch (e) { alert('Eroare: ' + e.message); }
         });
@@ -458,12 +458,12 @@
             <td>${c.id}</td>
             <td><img src="${api.basePath}/${LeG.iconSrc(c.icon)}" style="width:18px;height:18px;vertical-align:middle"/> ${esc(c.name)}</td>
             <td>${esc(c.category)}</td><td>${esc(c.slug)}</td>
-            <td><button class="btn" data-dc="${c.id}" data-testid="del-comp-${c.id}">Sterge</button></td>
+            <td><button class="btn" data-dc="${c.id}" data-testid="del-comp-${c.id}">Șterge</button></td>
           </tr>`).join('');
         tb.innerHTML = `<thead><tr><th>#</th><th>Nume</th><th>Categorie</th><th>Slug</th><th></th></tr></thead>
           <tbody>${rows}</tbody>`;
         tb.querySelectorAll('[data-dc]').forEach(b => b.onclick = async () => {
-          if (!confirm('Sigur stergi componenta?')) return;
+          if (!confirm('Sigur ștergi componenta?')) return;
           try { await api.delete('/admin/components/' + b.dataset.dc); apLoadComponents(); apLoadStats(); }
           catch (e) { alert('Eroare: ' + e.message); }
         });
@@ -489,14 +489,14 @@
     q('ap-form-import').addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = q('ap-import-msg');
-      msg.textContent = 'Se importa...'; msg.className = '';
+      msg.textContent = 'Se importă...'; msg.className = '';
       try {
         const res = await fetch(api.basePath + '/api/admin/import/components', {
           method: 'POST', headers: { 'Authorization': 'Bearer ' + api.getToken() }, body: new FormData(e.target),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Eroare server');
-        msg.textContent = `Importat: ${data.inserted} adaugate, ${data.skipped} sarite/duplicate.`;
+        msg.textContent = `Importat: ${data.inserted} adăugate, ${data.skipped} sărite/duplicate.`;
         msg.className = 'msg-ok';
         if (data.inserted > 0) { apLoadComponents(); apLoadStats(); }
       } catch (err) { msg.textContent = err.message; msg.className = 'msg-error'; }

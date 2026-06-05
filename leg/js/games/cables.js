@@ -33,12 +33,11 @@
          </div>`).join('');
       const tHtml = targets.map((t, i) =>
         `<div class="t-slot" data-target="${esc(t.target)}" data-i="${i}" data-testid="t-slot-${esc(t.target)}">
-           <img src="${LeG.iconSrc(t.icon || 'tools.png')}" alt=""/>
            <b>${esc(t.label)}</b>
            <span style="margin-left:auto;font-size:11px;color:#666">conector?</span>
          </div>`).join('');
       host.stage(`
-        <p><b>Trage fiecare cablu de la sursa (PSU) la componenta potrivita:</b></p>
+        <p><b>Trage fiecare cablu de la sursă (PSU) la componenta potrivită:</b></p>
         <div class="cable-grid">
           <div>
             <h4 style="margin:0 0 6px 0">Cabluri PSU</h4>

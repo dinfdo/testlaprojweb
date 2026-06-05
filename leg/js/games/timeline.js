@@ -24,7 +24,7 @@
     let submitted = false;
 
     function render() {
-      host.setProgress('Aranjaza de la cel mai vechi la cel mai recent');
+      host.setProgress('Aranjează de la cel mai vechi la cel mai recent');
       const items = order.map((ev, i) => `
         <div class="tl-item" data-id="${ev.id}" data-testid="tl-item-${ev.id}">
           <div class="tl-num">${i + 1}</div>
@@ -76,7 +76,7 @@
       let correctCount = 0;
       order.forEach((ev, i) => { if (ev.id === correct[i]) correctCount++; });
       host.addScore(correctCount * points);
-      host.setInfo('Corect: ' + correctCount + '/' + correct.length + ' pozitii');
+      host.setInfo('Corect: ' + correctCount + '/' + correct.length + ' poziții');
       snd[correctCount === correct.length ? 'success' : 'error']();
       resultScreen(host, {
         gameId, slug: 'history-timeline', difficulty,
